@@ -46,5 +46,23 @@ public class PalabraService {
         }
 	   
 	}
+	public String comprobarPalabra(String palabra,Integer intento,Integer id) {
+		
+		Optional<Acertijo> palabraBuscada=acertijoRepository.findById(id);
+		if(palabraBuscada.isPresent()) {
+			Acertijo palabraEncontradaPresente=palabraBuscada.get();
+			if(palabraEncontradaPresente.getResultado().equalsIgnoreCase(palabra)) {
+				return "1";
+			}else if(intento<3) {
+				return palabraEncontradaPresente.getResultado().substring(0, intento+1);
+			}else {
+				return "-"+palabraEncontradaPresente.getResultado();
+			}
+		}else {
+			return null;
+		}
+		
+		
+	}
 	
 }
